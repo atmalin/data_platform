@@ -1,0 +1,210 @@
+################################################ server start ################################################
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    threads:
+      max: 1000
+      min-spare: 30
+    uri-encoding: UTF-8
+################################################ server end ################################################
+
+################################################ spring config end ################################################
+spring:
+  application:
+    name: spring-boot-master
+  jpa:
+    show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  banner:
+    charset: UTF-8
+  servlet:
+    # 文件上传配置
+    multipart:
+      # 指定上传文件的临时目录
+#      location: /opt/file
+      location: /Users/panyuehao/IdeaProjects/tmp
+      # 单个文件最大值
+      max-file-size: 500MB
+      # 单个请求文件总计最大值
+      max-request-size: 500MB
+  datasource:
+    hikari:
+      auto-commit: true
+      idle-timeout: 60000
+      connection-timeout: 60000
+      max-lifetime: 0
+      minimum-idle: 10
+      maximum-pool-size: 10
+
+################################################ spring config start ################################################
+
+################################################ spring-boot-master start ################################################
+spring-boot-master:
+  # nginx 配置端口
+  nginx-port: 8888
+  # Swagger路径
+  swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
+  # 文件上传下载配置
+  # 上传路径配置
+  upload-path: /data/resource/
+  # 资源访问路径
+  resource-access-path: /resource/
+  # 资源访问路径匹配：/resource/**
+  resource-access-patterns: ${spring-boot-master.resource-access-path}**
+  # 资源访问全路径前缀：http://127.0.0.1:8888/resource/
+  resource-access-url: http://${spring-boot-master.server-ip}:${spring-boot-master.nginx-port}${spring-boot-master.resource-access-path}
+  # 全局允许上传的类型
+  allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+  # 全局允许下载的类型
+  allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+  # Filter配置
+  filter:
+    request:
+      enable: true
+      url-patterns: /*
+      order: 1
+      async: true
+    xss:
+      enable: false
+      url-patterns: /*
+      order: 2
+      async: true
+
+  # 拦截器配置
+  interceptor:
+    permission:
+      enable: true
+      include-paths: /**
+    resource:
+      enable: true
+      include-paths: ${spring-boot-master.resource-access-patterns}
+    upload:
+      enable: true
+      include-paths: /upload/**
+    download:
+      enable: true
+      include-paths: /download/**
+################################################ spring-boot-master end ################################################
+
+################################################ Resource start ################################################
+  # 静态资源访问配置
+  resource-handlers: |
+    /static/**=classpath:/static/
+    swagger-ui.html=classpath:/META-INF/resources/
+    /webjars/**=classpath:/META-INF/resources/webjars/
+    doc.html=classpath:/META-INF/resources/
+################################################ Resource start ################################################
+
+################################################ oauth start ################################################
+  oauth:
+    # 默认初始化超级管理员用户
+    init-username: admin
+    init-password: 123456
+    # 默认头像地址
+    init-head: http://${spring-boot-master.server-ip}:8888/api/resource/header.png
+    # 默认角色 id
+    init-role-id: 1
+################################################ oauth end ################################################
+
+################################################ shiro start ################################################
+  shiro:
+    # 是否启用
+    enable: true
+    # 权限配置
+    anon:
+      # 排除登录登出
+      - /login,/logout
+      # 排除静态资源
+      - /static/**,/templates/**
+      # 排除Swagger
+      - ${spring-boot-master.swagger-paths}
+      # 排除actuator
+      - /actuator/**
+      - # 排除首页
+      - /,/index.html
+      # 排除测试路径
+      - /hello/world
+    # 多行字符串权限配置
+    filter-chain-definitions: |
+      /resource/**=anon
+      /upload/**=anon
+      /verificationCode/**=anon
+      /enum=anon
+      /getSysUserInfo=anon
+
+################################################ shiro end ################################################
+
+################################################ jwt start ################################################
+  jwt:
+    # token请求头名称
+    token-name: token
+    # jwt密钥
+    secret: iecas
+    # 发行人
+    issuer: spring-boot-master
+    # 主题
+    subject: data-center
+    # 签发的目标
+    audience: web
+    # 默认过期时间1小时，单位：秒
+    expire-second: 36000
+    # 是否刷新token
+    refresh-token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh-token-countdown: 600
+    # redis校验jwt token是否存在,可选
+    redis-check: true
+    # true: 同一个账号只能是最后一次登录token有效，false：同一个账号可多次登录
+    single-login: true
+    # 盐值校验，如果不加自定义盐值，则使用secret校验
+    salt-check: true
+################################################ jwt end ################################################
+
+################################################ swagger start ################################################
+  swagger:
+    # 是否启用
+    enable: true
+    base:
+      # 扫描的包, 多个包之间用逗号隔开
+      package: cn.iecas.springboot
+    contact:
+      name: ch
+      description: spring-boot 脚手架
+      title: ${spring.application.name} API Documents
+      version: ${project.version}
+    # 自定义参数配置，可配置N个
+    parameter-config:
+      - name: token
+        description: Token Request Header
+        # header, cookie, body, query
+        type: header
+        data-type: String
+        required: false
+        # 测试接口时，自动填充token的值
+        default-value:
+
+# knife4j 配置
+knife4j:
+  enable: ${spring-boot-master.swagger.enable}
+  basic:
+    enable: true
+    username: admin
+    password: admin
+
+################################################ swagger end ################################################
+
+################################################ feign start ################################################
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
