@@ -8,7 +8,6 @@ import cn.iecas.springboot.framework.common.controller.BaseController;
 import cn.iecas.springboot.framework.core.pagination.PageResult;
 import cn.iecas.springboot.framework.core.pagination.SearchParam;
 import cn.iecas.springboot.framework.core.validator.groups.Add;
-import cn.iecas.springboot.framework.core.validator.groups.Update;
 import cn.iecas.springboot.framework.log.annotation.Module;
 import cn.iecas.springboot.framework.log.annotation.OperationLog;
 import cn.iecas.springboot.framework.log.enums.OperationLogType;

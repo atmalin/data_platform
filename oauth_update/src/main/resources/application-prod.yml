@@ -1,6 +1,6 @@
 spring-boot-master:
   # 服务器 IP 地址
-  server-ip: 127.0.0.1
+  server-ip: 47.102.103.62
   swagger:
     enable: true
 
@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://${spring-boot-master.server-ip}:9996/oauth?characterEncoding=UTF-8&serveTimezone=GMT%2b8
     username: root
-    password: 12345678
+    password: Aircas.123
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
 

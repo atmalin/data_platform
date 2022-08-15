@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface UserDeptDao extends JpaRepository<UserDeptBean, Long> {
     @Query(nativeQuery = true, value = "select distinct dept_id from tb_user_dept where user_id =:userId")

@@ -1,10 +1,10 @@
 spring-boot-master:
-  server-ip: 120.48.69.43
+  server-ip: 47.102.103.62
 
 ############################### mysql 数据源 #################################
 spring:
   datasource:
-    url: jdbc:mysql://${spring-boot-master.server-ip}:9996/elias_test?characterEncoding=UTF-8&serveTimezone=GMT%2b8&useSSL=false
+    url: jdbc:mysql://${spring-boot-master.server-ip}:9996/oauth?characterEncoding=UTF-8&serveTimezone=GMT%2b8&useSSL=false
     username: root
     password: Aircas.123
     driver-class-name: com.mysql.cj.jdbc.Driver

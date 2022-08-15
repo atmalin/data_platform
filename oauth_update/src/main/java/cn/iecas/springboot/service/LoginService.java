@@ -7,7 +7,6 @@ import cn.iecas.springboot.entity.UserBean;
 import cn.iecas.springboot.framework.config.properties.JwtProperties;
 import cn.iecas.springboot.framework.config.properties.SpringBootMasterProperties;
 import cn.iecas.springboot.framework.core.util.SaltUtil;
-import cn.iecas.springboot.framework.exception.DaoException;
 import cn.iecas.springboot.framework.shiro.cache.LoginRedisService;
 import cn.iecas.springboot.framework.shiro.jwt.JwtToken;
 import cn.iecas.springboot.framework.shiro.util.JwtTokenUtil;
@@ -24,7 +23,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Example;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -33,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Api

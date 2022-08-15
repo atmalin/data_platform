@@ -22,7 +22,8 @@ public class LoginUserVo implements Serializable {
     private static final long serialVersionUID = -4261077665508765946L;
 
     @ApiModelProperty("主键")
-    private Long id;
+//    private Long id;
+    private String id;
 
     @ApiModelProperty("用户名")
     private String username;
