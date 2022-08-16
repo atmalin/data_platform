@@ -79,7 +79,8 @@ public class UserController extends BaseController<UserAdd, Long> {
     protected ApiResult<PageResult<UserAdd>> getList(SearchParam param) {
         return null;
     }
-    @PostMapping("/list")
+
+    @GetMapping("/list")
     @RequiresPermissions("sys:user:list")
     @OperationLog(name = "获取用户分页列表", type = OperationLogType.LIST)
     @ApiOperation("获取用户分页列表")
