@@ -1,6 +1,6 @@
 spring-boot-master:
   # 服务器 IP 地址
-  server-ip: 47.102.103.62
+  server-ip: 120.48.69.43
   swagger:
     enable: true
 
