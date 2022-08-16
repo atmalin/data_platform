@@ -13,6 +13,7 @@ import java.util.Set;
  * </p>
  *
  * @author ch
+ * @author gb 将用户id更改为String类型 uuid
  * @date 2021-10-15
  **/
 @Data

@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  * 系统权限 前端控制器
  * </pre>
  *
- * @author ch
- * @since 2021-10-15
+ * @author gb
+ * 最高权限sys admin 123456
  */
 @Slf4j
 @RestController
