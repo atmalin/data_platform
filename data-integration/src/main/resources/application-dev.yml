@@ -1,0 +1,20 @@
+spring-boot-master:
+  server-ip: 120.48.69.43
+
+############################### mysql 数据源 #################################
+spring:
+  datasource:
+    url: jdbc:mysql://${spring-boot-master.server-ip}:9996/data_di?characterEncoding=UTF-8&serveTimezone=GMT%2b8
+    username: root
+    password: Aircas.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+
+############################## di properties ##############################
+di-properties:
+  # 文件上传路径
+  upload-path: C:/work/upload
+  # 全局允许上传的类型
+  allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+  # 全局允许下载的类型
+  allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf

@@ -1,0 +1,26 @@
+server:
+  port: 8075
+
+############################### jpa start #################################
+spring:
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+# 当前项目maven激活环境，例如：dev/test/uat/prod，对应pom.xml中profile设置值
+---
+spring:
+  profiles:
+    include: @profileActive@,config
+
