@@ -1,0 +1,12 @@
+#spring-boot-master:
+#  server-ip: 20.10.0.23
+
+############################### mysql 数据源 #################################
+spring:
+  datasource:
+#    url: jdbc:mysql://${spring-boot-master.server-ip}:3306/ch?characterEncoding=UTF-8&serveTimezone=GMT%2b8
+    url: jdbc:mysql://localhost:3306/source_db?characterEncoding=UTF-8&serveTimezone=GMT%2b8
+    username: root
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
