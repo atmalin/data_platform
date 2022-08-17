@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 系统角色管理
  *
@@ -53,13 +55,17 @@ public class RoleController extends BaseController<RoleBean, Long> {
         return roleService.remove(aLong);
     }
 
-
+    /**
+     * ’数据中台‘系统查询角色走的role/list 返回结果为所有角色信息
+     * @param
+     * @return
+     */
     @GetMapping("/list")
-    @ApiOperation("获取角色分页列表")
+    @ApiOperation("获取角色列表")
     @RequiresPermissions("sys:role:list")
     @OperationLog(name = "获取角色分页列表",type = OperationLogType.LIST)
-    protected ApiResult<PageResult<RoleBean>> List(@RequestBody SearchParam param) {
-        return roleService.list(param);
+    protected ApiResult<List<RoleBean>> List() {
+        return roleService.list();
     }
 
     @PostMapping("/modify")

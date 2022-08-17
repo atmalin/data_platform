@@ -142,17 +142,22 @@ public class RoleService {
         return ApiResult.success(roleBean);
     }
 
-    public ApiResult<PageResult<RoleBean>> list(SearchParam param) {
-        Example<RoleBean> example = ExampleUtil.generateExampleWithOutIgnoreProps(param.getQueryCondition(), RoleBean.class);
-        Pageable pageable = PageableUtil.generatePageable(param);
-        Page<RoleBean> roleBeans;
-        if (example == null) {
-            roleBeans = roleDao.findAll(pageable);
-        } else {
-            roleBeans = roleDao.findAll(example, pageable);
-        }
-        return ApiResult.success(new PageResult<>(roleBeans));
+    public ApiResult<List<RoleBean>> list(){
+        List<RoleBean> all = roleDao.findAll();
+        return ApiResult.success(all);
     }
+
+//    public ApiResult<PageResult<RoleBean>> list(SearchParam param) {
+//        Example<RoleBean> example = ExampleUtil.generateExampleWithOutIgnoreProps(param.getQueryCondition(), RoleBean.class);
+//        Pageable pageable = PageableUtil.generatePageable(param);
+//        Page<RoleBean> roleBeans;
+//        if (example == null) {
+//            roleBeans = roleDao.findAll(pageable);
+//        } else {
+//            roleBeans = roleDao.findAll(example, pageable);
+//        }
+//        return ApiResult.success(new PageResult<>(roleBeans));
+//    }
 
 //
 //    //更新角色权限
