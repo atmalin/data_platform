@@ -5,3 +5,7 @@
  - oauth_update:系统管理模块
    - 端口号: 8081
    - 数据库: oauth
+
+- data-integration:系统管理模块
+   - 端口号: 8075
+   - 数据库: data_di
