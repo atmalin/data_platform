@@ -1,9 +1,12 @@
 package cn.iecas.springboot.service;
 
-import cn.iecas.springboot.bean.*;
+import cn.iecas.springboot.bean.DbInfoBean;
+import cn.iecas.springboot.bean.DbTypeBean;
+import cn.iecas.springboot.bean.SourceBean;
 import cn.iecas.springboot.dao.DbInfoDao;
 import cn.iecas.springboot.dao.DbTypeDao;
 import cn.iecas.springboot.dao.SourceDao;
+import cn.iecas.springboot.entity.BigEntity;
 import cn.iecas.springboot.framework.core.pagination.PageResult;
 import cn.iecas.springboot.framework.core.pagination.SearchParam;
 import cn.iecas.springboot.framework.exception.BusinessException;
@@ -12,7 +15,10 @@ import cn.iecas.springboot.framework.util.ExampleUtil;
 import cn.iecas.springboot.framework.util.PageableUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,9 +61,9 @@ public class DbInfoService {
 //        return ApiResult.success(getBean);
 //    }
 
-    public ApiResult<BigBean> add(BigBean bigBean){
+    public ApiResult<BigEntity> add(BigEntity bigEntity){
         DbInfoBean dbInfoBean = new DbInfoBean();
-        BeanUtils.copyProperties(bigBean, dbInfoBean);
+        BeanUtils.copyProperties(bigEntity, dbInfoBean);
         dbInfoDao.save(dbInfoBean);
 
         if(!sourceDao.existsById(dbInfoBean.getSourceId())){
@@ -66,7 +72,7 @@ public class DbInfoService {
             sourceBean.setName(dbInfoBean.getSysType());
             sourceDao.save(sourceBean);
         }
-        return ApiResult.success(bigBean);
+        return ApiResult.success(bigEntity);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -80,14 +86,14 @@ public class DbInfoService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ApiResult<BigBean> update(BigBean bigBean){
+    public ApiResult<BigEntity> update(BigEntity bigEntity){
         DbInfoBean dbInfoBean = new DbInfoBean();
-        BeanUtils.copyProperties(bigBean, dbInfoBean);
+        BeanUtils.copyProperties(bigEntity, dbInfoBean);
         if(!dbInfoDao.existsById(dbInfoBean.getId())){
             throw new BusinessException("该数据源不存在");
         }
         dbInfoDao.saveAndFlush(dbInfoBean);
-        return ApiResult.success(bigBean);
+        return ApiResult.success(bigEntity);
     }
 //    @Transactional(rollbackFor = Exception.class)
 //    public ApiResult<DbInfoBean> update(DbInfoBean dbInfoBean){
@@ -98,35 +104,41 @@ public class DbInfoService {
 //        return ApiResult.success(dbInfoBean);
 //    }
 
-    public ApiResult<BigBean> getOne(String id){
+    public ApiResult<BigEntity> getOne(String id){
         if(!dbInfoDao.existsById(id)){
             throw new BusinessException("该数据源不存在");
         }
         DbInfoBean dbInfoBean = dbInfoDao.getOne(id);
         SourceBean sourceBean = sourceDao.findOneSourceById(dbInfoBean.getSourceId());
         DbTypeBean dbTypeBean = dbTypeDao.findOneDbTypeBeanByType(dbInfoBean.getDbType());
-        BigBean bigBean = new BigBean();
-        BeanUtils.copyProperties(dbInfoBean, bigBean);
-        bigBean.setDbTypeBean(dbTypeBean);
-        bigBean.setSourceBean(sourceBean);
-        return ApiResult.success(bigBean);
+        BigEntity bigEntity = new BigEntity();
+        BeanUtils.copyProperties(dbInfoBean, bigEntity);
+        bigEntity.setDbTypeBean(dbTypeBean);
+        bigEntity.setSourceBean(sourceBean);
+        return ApiResult.success(bigEntity);
     }
 
 
-    public ApiResult<PageResult<BigBean>> getList(SearchParam param){
+    public ApiResult<PageResult<BigEntity>> getList(SearchParam param){
         Example<DbInfoBean> example = ExampleUtil.generateExampleWithOutIgnoreProps(param.getQueryCondition(), DbInfoBean.class);
         Pageable pageable = PageableUtil.generatePageable(param);
-        Page<DbInfoBean> dbInfoBeans = dbInfoDao.findAll(example, pageable);
-        List<BigBean> BigBeans = new ArrayList<>();
-        for(DbInfoBean dbInfoBean:dbInfoBeans){
-            BigBean bigBean = new BigBean();
-            BeanUtils.copyProperties(dbInfoBean, bigBean);
-            bigBean.setSourceBean(sourceDao.findOneSourceById(dbInfoBean.getSourceId()));
-            bigBean.setDbTypeBean(dbTypeDao.findOneDbTypeBeanByType(dbInfoBean.getDbType()));
-            BigBeans.add(bigBean);
+        Page<DbInfoBean> dbInfoBeans;
+//        Page<DbInfoBean> dbInfoBeans = dbInfoDao.findAll(example, pageable);
+        if (example == null) {
+            dbInfoBeans = dbInfoDao.findAll(pageable);
+        } else {
+            dbInfoBeans = dbInfoDao.findAll(example, pageable);
         }
-        Page<BigBean> page = new PageImpl(BigBeans);
-        return ApiResult.success(new PageResult<>(page));
+        List<BigEntity> bigEntities = new ArrayList<>();
+        for(DbInfoBean dbInfoBean:dbInfoBeans){
+            BigEntity bigEntity = new BigEntity();
+            BeanUtils.copyProperties(dbInfoBean, bigEntity);
+            bigEntity.setSourceBean(sourceDao.findOneSourceById(dbInfoBean.getSourceId()));
+            bigEntity.setDbTypeBean(dbTypeDao.findOneDbTypeBeanByType(dbInfoBean.getDbType()));
+            bigEntities.add(bigEntity);
+        }
+        Page<BigEntity> page = new PageImpl(bigEntities);
+        return ApiResult.success(new PageResult<>(page), "成功");
     }
 
 }

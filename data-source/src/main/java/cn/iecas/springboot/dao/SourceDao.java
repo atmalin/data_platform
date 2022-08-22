@@ -13,6 +13,9 @@ public interface SourceDao extends JpaRepository<SourceBean, String> {
     @Query(nativeQuery = true, value = "select * from source where id = :id")
     SourceBean findOneSourceById(@Param("id") String id);
 
+    @Query(nativeQuery = true, value = "select name from source where id = :id")
+    String findNameById(@Param("id") String id);
+
     @Query(nativeQuery = true, value = "select * from source where id in (select source_id from db_info where name = :name)")
     List<SourceBean> findSourceDaoById(@Param("name") String name);
 }

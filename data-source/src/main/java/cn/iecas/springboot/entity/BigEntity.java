@@ -1,5 +1,7 @@
-package cn.iecas.springboot.bean;
+package cn.iecas.springboot.entity;
 
+import cn.iecas.springboot.bean.DbTypeBean;
+import cn.iecas.springboot.bean.SourceBean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +20,7 @@ import java.util.Date;
 @ApiModel("外部包装Bean")
 @AllArgsConstructor
 @NoArgsConstructor
-public class BigBean implements Serializable {
+public class BigEntity implements Serializable {
     private static final long serialVersionUID = -3685681079027132561L;
 
     @GeneratedValue(generator = "jpa-uuid")

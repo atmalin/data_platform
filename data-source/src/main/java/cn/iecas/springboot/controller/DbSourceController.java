@@ -1,12 +1,13 @@
 package cn.iecas.springboot.controller;
 
+import cn.iecas.springboot.entity.AddEntity;
 import cn.iecas.springboot.entity.BigEntity;
-import cn.iecas.springboot.framework.common.controller.BaseController;
+import cn.iecas.springboot.entity.UpdateEntity;
 import cn.iecas.springboot.framework.core.pagination.PageResult;
 import cn.iecas.springboot.framework.core.pagination.SearchParam;
 import cn.iecas.springboot.framework.log.annotation.Module;
 import cn.iecas.springboot.framework.result.ApiResult;
-import cn.iecas.springboot.service.DbInfoService;
+import cn.iecas.springboot.service.DbService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,44 +17,33 @@ import org.springframework.web.bind.annotation.*;
 @Api("数据源管理")
 @RestController
 @Module("model")
-@RequestMapping("/source")
+@RequestMapping("/DbSource")
 @CrossOrigin(value = "*", maxAge = 3600)
-public class DbController extends BaseController<BigEntity, String> {
+public class DbSourceController {
     @Autowired
-    private DbInfoService dbInfoService;
+    private DbService dbService;
 
-    @Override
     @PostMapping("/add")
     @ApiOperation("添加数据源")
-    protected ApiResult<BigEntity> add(BigEntity bigEntity){
-        return dbInfoService.add(bigEntity);
+    protected ApiResult<Boolean> add(AddEntity addEntity){
+        return dbService.add(addEntity);
     }
 
-    @Override
     @DeleteMapping("/{id}")
     @ApiOperation("删除数据源")
-    protected ApiResult<String> delete(@PathVariable("id") String id) {
-        return dbInfoService.remove(id);
+    protected ApiResult<String> remove(@PathVariable("id") String id) {
+        return dbService.remove(id);
     }
 
-    @Override
-    @PostMapping("/update")
+    @PostMapping("/modify")
     @ApiOperation("修改数据源")
-    protected ApiResult<BigEntity> update(BigEntity bigEntity) {
-        return dbInfoService.update(bigEntity);
+    protected ApiResult<Boolean> modify(UpdateEntity updateEntity) {
+        return dbService.modify(updateEntity);
     }
 
-    @Override
-    @PostMapping("/info/{id}")
-    @ApiOperation("获取数据源详情")
-    protected ApiResult<BigEntity> getOne(@PathVariable("id") String id) {
-        return dbInfoService.getOne(id);
-    }
-
-    @Override
     @PostMapping("/list")
     @ApiOperation("数据源分页列表")
     protected ApiResult<PageResult<BigEntity>> getList(@Validated @RequestBody SearchParam param) {
-        return dbInfoService.getList(param);
+        return dbService.getList(param);
     }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 public interface DbInfoDao extends JpaRepository<DbInfoBean, String> {
     @Query(nativeQuery = true,
             value = "select * from db_info where name like %:name%")
-//    address, connnect_pass, connect_user, create_time, db_type, description, id, name, source_id, sys_type, update_time from db_info where name = :name
     List<DbInfoBean> findDbInfoBeanByNameLike(@Param("name") String name);
 
     Boolean existsByName(String name);
