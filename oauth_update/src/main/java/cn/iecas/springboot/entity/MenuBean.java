@@ -73,21 +73,4 @@ public class MenuBean extends BaseBean {
     @ApiModelProperty("按钮")
     private List<ButtonBean> buttonBeans;
 
-    @Override
-    public String toString() {
-        return "MenuBean{" +
-                "id='" + id + '\'' +
-                ", parent_id='" + parent_id + '\'' +
-                ", name='" + name + '\'' +
-                ", en_name='" + en_name + '\'' +
-                ", url='" + url + '\'' +
-                ", description='" + description + '\'' +
-                ", client_id='" + client_id + '\'' +
-                ", route_url='" + route_url + '\'' +
-                ", sort=" + sort +
-                ", icon='" + icon + '\'' +
-                ", children=" + children +
-                ", buttonBeans=" + buttonBeans +
-                '}';
-    }
 }

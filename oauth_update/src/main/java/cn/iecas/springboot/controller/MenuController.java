@@ -43,7 +43,7 @@ public class MenuController {
     @RequiresPermissions("sys:menu:list")
     @OperationLog(name = "获取菜单分页列表", type = OperationLogType.LIST)
     @ApiOperation("获取菜单分页列表")
-    protected ApiResult<List<MenuBean>> List() {
+    protected ApiResult<List<MenuVo>> List() {
         return menuService.list();
     }
 
@@ -53,6 +53,22 @@ public class MenuController {
     @OperationLog(name = "添加菜单", type = OperationLogType.ADD)
     protected ApiResult<MenuBean> add(@Validated(Add.class) @RequestBody MenuBean menuBean) {
         return menuService.add(menuBean);
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation("删除菜单")
+    @RequiresPermissions("sys:menu:delete")
+    @OperationLog(name = "删除菜单")
+    protected ApiResult<String> delete(String id) {
+        return menuService.remove(id);
+    }
+
+    @PutMapping("/update")
+    @ApiOperation("更改菜单")
+    @RequiresPermissions("sys:menu:update")
+    @OperationLog(name = "添加菜单", type = OperationLogType.ADD)
+    protected ApiResult<MenuBean> update(@Validated(Add.class) @RequestBody MenuBean menuBean) {
+        return menuService.update(menuBean);
     }
 
 

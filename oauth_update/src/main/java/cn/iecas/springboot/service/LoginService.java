@@ -128,7 +128,7 @@ public class LoginService {
         // 从 SecurityUtils 里边创建一个 subject
         boolean enableShiro = springBootMasterProperties.getShiro().isEnable();
         if (enableShiro) {
-            //实现Shiro的认证和授权，需要自定义Realm继承于AuthorizingRealm，
+            //实现Shiro的认证和授权，需要自定义Realm继承于Au thorizingRealm，
             // 同时重写doGetAuthenticationInfo（认证）和doGetAuthorizationInfo（授权）这两个方法。
             // 如果认证成功，那么在系统的任何地方通过SecurityUtils.getSubject()方法就可以获取认证通过的信息。
             // 我们也可以借助它的这点特性，实现用户的自动登录。

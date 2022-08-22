@@ -54,7 +54,7 @@ public class UserController extends BaseController<UserAdd, Long> {
         return null;
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation("删除系统用户")
     @RequiresPermissions("sys:user:delete")
     @OperationLog(name = "添加系统用户", type = OperationLogType.ADD)
