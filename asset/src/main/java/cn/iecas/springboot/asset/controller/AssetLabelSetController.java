@@ -40,21 +40,21 @@ public class AssetLabelSetController extends BaseController<AssetLabelSetVo, Str
     private AssetLabelRelService assetLabelRelService;
 
     @Override
-    @PostMapping("/add")
+    @PutMapping("/add")
     @ApiOperation("增加标签集")
     protected ApiResult<AssetLabelSetVo> add( AssetLabelSetVo data) {
         return assetLabelSetService.add(data);
     }
 
     @Override
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation("删除标签集")
     protected ApiResult<String> delete(String id) {
         return assetLabelSetService.delete(id);
     }
 
     @Override
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation("修改标签集")
     protected ApiResult<AssetLabelSetVo> update(AssetLabelSetVo data) {
         return assetLabelSetService.update(data);
@@ -75,19 +75,19 @@ public class AssetLabelSetController extends BaseController<AssetLabelSetVo, Str
     }
 
 
-    @PostMapping("/bind")
+    @PutMapping("/bind")
     @ApiOperation("标签集绑定标签")
     protected ApiResult<String> bind( AssetLabelRelVo data) {
         return assetLabelRelService.bind(data);
     }
 
-    @PostMapping("/unBind/one")
+    @DeleteMapping("/unBind/one")
     @ApiOperation("标签集解除标签")
     protected ApiResult<String> unbind(String labelSetId, String labelId) {
         return assetLabelRelService.unbind(labelSetId, labelId);
     }
 
-    @PostMapping("/move")
+    @DeleteMapping("/move")
     @ApiOperation("修改标签集hot值")
     protected ApiResult<String> move(AssetLabelSetVo assetLabelSetVo) {
         return assetLabelSetService.move(assetLabelSetVo);

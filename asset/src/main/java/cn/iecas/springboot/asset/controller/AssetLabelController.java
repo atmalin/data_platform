@@ -46,14 +46,14 @@ public class AssetLabelController extends BaseController<AssetLabel, String> {
     }
 
     @Override
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation("删除标签")
     protected ApiResult<String> delete(String id) {
         return assetLabelService.delete(id);
     }
 
     @Override
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation("修改标签")
     protected ApiResult<AssetLabel> update(AssetLabel data) {
         return assetLabelService.update(data);

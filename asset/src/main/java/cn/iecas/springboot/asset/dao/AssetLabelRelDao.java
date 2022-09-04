@@ -43,8 +43,8 @@ public interface AssetLabelRelDao extends JpaRepository<AssetLabelRel, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete from asset_label_rel c where c.label_set_id =:labelSetId", nativeQuery = true)
-    int deleteByLabelSetId(@Param("labelSetId") String labelSetId);
+//    @Query(value = "delete from asset_label_rel c where c.label_set_id =:labelSetId", nativeQuery = true)
+    int deleteByLabelSetId(String labelSetId);
 
     //增加的方法用自带的方法save
 

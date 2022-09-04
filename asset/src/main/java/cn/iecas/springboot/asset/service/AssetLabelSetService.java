@@ -57,7 +57,8 @@ public class AssetLabelSetService {
     public ApiResult<String> delete(String id) {
         if (assetLabelSetDao.existsById(id)) {
             assetLabelSetDao.deleteById(id);
-            assetLabelRelDao.deleteByLabelSetId(id);
+            int i = assetLabelRelDao.deleteByLabelSetId(id);
+            System.out.println(i);
             return ApiResult.success("删除成功");
         } else {
             return ApiResult.fail("该资源已被删除");
